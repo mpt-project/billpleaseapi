@@ -1,9 +1,9 @@
-const { Router } = require('express')
+const imageRoutes = require('./image.routes')
 
-const routes = Router()
-
-routes.all('/', (req, res) => {
-	res.status(200).json({ message: 'OK' })
-})
-
-module.exports = routes
+module.exports = (app) => {
+    /**
+     * Path: /image
+     * POST: <upload image> base64 data with compressed image
+     */
+    app.use('/image', imageRoutes)
+}
