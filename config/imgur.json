@@ -1,4 +1,10 @@
 {
   "clientId": "ccf2fad8452e76c",
-  "clientSecret": "204d0656e74a96b073f885d9c08a1e77fc45983a"
+  "clientSecret": "204d0656e74a96b073f885d9c08a1e77fc45983a",
+  "host": "https://api.imgur.com",
+  "version": "3",
+  "endpoints": {
+  	"authorization": "https://api.imgur.com/oauth2/token",
+  	"upload": "https://api.imgur.com/3/image"
+  }
 }
