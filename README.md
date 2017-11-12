@@ -9,7 +9,8 @@
 
 ### Routes for model *
 
-| Method        | Path             | Params  |
-| ------------- |:----------------:| :------:|
-| **GET**       | /                | { }     |
-| **POST**      | /                | { }     |
+| Method        | Path             | Params           |
+| ------------- |:----------------:| :---------------:|
+| **GET**       | /                | { }              |
+| **POST**      | /                | { }              |
+| **POST**      | /image           | _image_ {String} |
