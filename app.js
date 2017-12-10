@@ -19,6 +19,15 @@ app.use(logger('dev'))
 app.use(bodyParser.json({ limit: '10mb' }))
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }))
 
+/** Attach DB to request object */
+app.use((req, res, next) => {
+	console.log('helo');
+	console.log(db);
+	req.db = db
+	console.log(req.db)		
+	return next();
+})
+
 /**
  * Set routes for API
  */
