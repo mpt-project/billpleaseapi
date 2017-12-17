@@ -17,12 +17,10 @@ routes.post('/', function(req, res) {
                     let sessionCheck = req.session.userId.filter(function(obj){
                         return obj.userId == user._id;
                     });
-                    console.log(sessionCheck);
                     if(sessionCheck.length === 0){
                         req.session.userId.push({userId: user._id});
                         res.status(200).json({"message": "Login succesfully user", "id": user._id});
                     }else{
-                        console.log('you are already loged in');
                         res.status(200).json({"message": "session exists ", "id": user._id});
                     }
                 } else {

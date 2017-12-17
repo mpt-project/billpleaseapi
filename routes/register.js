@@ -12,7 +12,6 @@ routes.post('/', function(req, res) {
         };
         User.create(userData, function(err, user) {
             if(err) {
-                console.log(err);
                 if(err.code === 11000){
                     res.status(401).json({"message": "Email already in use"});
                 }else{
