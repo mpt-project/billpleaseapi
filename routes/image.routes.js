@@ -7,7 +7,6 @@ const img = new ImgurProvider()
 
 routes.post('/', (req, res) => {
 	ImgurConfig.findOne({ service: 'imgur.com' }, (err, data) => {
-		console.info('Tokens found in database cache')
 		const { access_token, refresh_token } = data
 		const { image } = req.body
 
