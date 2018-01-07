@@ -57,6 +57,7 @@ function downloadImg(receipts, callback){
             else{
                 let addImageReceipt = receipt.toObject();
                 addImageReceipt.image = data;
+                addImageReceipt.receiptId = addImageReceipt._id;
                 readyReceipts.push(addImageReceipt);
                 secondCallback();
             }
