@@ -1,9 +1,10 @@
-const { Router } = require('express')
+const { Router } = require('express');
 const User = require('../models/user');
 
 const routes = Router();
 
 routes.post('/', function(req, res) {
+    console.log(req.body);
     if(req.body.email && req.body.password && req.body.name) {
         let userData = {
             email: req.body.email,
@@ -20,10 +21,10 @@ routes.post('/', function(req, res) {
             }else {
                 if(req.session.userId){
                     req.session.userId.push({userId: user._id});
-                    res.status(200).json({"message": "account succesfully created", "id": user._id});
+                    res.status(200).json({"message": "Account successfully created", "id": user._id});
                 }else{
                     req.session.userId = [{userId: user._id}];
-                    res.status(200).json({"message": "account succesfully created", "id": user._id});
+                    res.status(200).json({"message": "Account successfully created", "id": user._id});
                 }
 
             }
