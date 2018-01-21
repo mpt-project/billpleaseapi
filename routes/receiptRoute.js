@@ -3,7 +3,6 @@ const { Router } = require('express');
 const Image = require('../models/image');
 const User = require('../models/user');
 const each = require('async/each');
-const rp = require('request-promise')
 
 const routes = Router();
 
@@ -16,12 +15,7 @@ routes.post('/', function(req, res){
             findAllReceipts(user, function(err, receipts){
                 if(err) res.status(401).json({"message": "Error occure why downloading receipts"});
                 else{
-                    downloadImg(receipts, function(err, downloaded){
-                       if(err)res.status(401).json({"message": "Error occure why downloading receipts"});
-                       else{
-                           res.status(200).json(downloaded);
-                       }
-                    });
+                           res.status(200).json(receipts);
                 }
             })
         }
@@ -67,8 +61,11 @@ function downloadImg(receipts, callback){
 function getBinaryImage(receipt, callback) {
     rp(receipt.imgUrl)
         .then(res => {
-            let data = Buffer.from(res);
-            callback(null, data);
+            let data3 = res.replace(/^data:image\/jpg;base64,/,"");
+            require("fs").writeFile("out.jpg", data3, 'base64',function(err) {
+                console.log(data3);
+            });
+            callback(null, data3);
         })
         .catch(err => {
             callback(err, null)
