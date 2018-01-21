@@ -18,8 +18,8 @@ const db = mongo(config.mongo[process.env.NODE_ENV])
 app.set('port', process.env.port || 3000);
 
 app.use(logger('dev'));
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 // users session
 app.use(session({
     secret: 'billpleaseapiandsomethingverylong',

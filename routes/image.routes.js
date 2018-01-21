@@ -6,7 +6,7 @@ const routes = Router();
 const img = new ImgurProvider();
 
 routes.post('/', (req, res) => {
-    const { image } = req.body;
+    const { image } = req.body.image;
     if (!image) {
         return res.status(400).json({ message: 'Missing "image" parameter' })
     }
