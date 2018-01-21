@@ -67,9 +67,8 @@ function downloadImg(receipts, callback){
 function getBinaryImage(receipt, callback) {
     rp(receipt.imgUrl)
         .then(res => {
-            console.log(res);
-            // let data = new Buffer(res, 'base64')
-            callback(null, res)
+            let data = Buffer.from(res);
+            callback(null, data);
         })
         .catch(err => {
             callback(err, null)
