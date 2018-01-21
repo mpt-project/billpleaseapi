@@ -7,13 +7,14 @@ routes.post('/', function(req, res) {
     console.log(req.body);
     if(req.body.email && req.body.password && req.body.name) {
         let userData = {
-            email: req.body.email,
-            name: req.body.name,
-            password: req.body.password
+            email: req.body.email.toString(),
+            name: req.body.name.toString(),
+            password: req.body.password.toString()
         };
         User.create(userData, function(err, user) {
             if(err) {
                 if(err.code === 11000){
+                    console.log(err);
                     res.status(401).json({"message": "Email already in use"});
                 }else{
                     res.status(401).json({"message": "Registration error"});

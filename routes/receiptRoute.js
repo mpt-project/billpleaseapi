@@ -3,7 +3,7 @@ const { Router } = require('express');
 const Image = require('../models/image');
 const User = require('../models/user');
 const each = require('async/each');
-const https = require('https');
+const rp = require('request-promise')
 
 const routes = Router();
 
@@ -45,21 +45,15 @@ function findAllReceipts(user, callback){
 
 function downloadImg(receipts, callback){
     let readyReceipts = [];
-    let options = {
-        hostname: 'api.imgur.com',
-        headers: {'Authorization': 'Client-ID ccf2fad8452e76c'},
-        method: 'GET'
-    };
     each(receipts, function(receipt, secondCallback){
-        options.path = receipt.imgUrl;
-        getBinaryImage(receipt, options, function(err, data){
+        getBinaryImage(receipt, function(err, data){
             if(err)secondCallback(err);
             else{
                 let addImageReceipt = receipt.toObject();
                 addImageReceipt.image = data;
                 addImageReceipt.receiptId = addImageReceipt._id;
                 readyReceipts.push(addImageReceipt);
-                secondCallback();
+                secondCallback(null);
             }
         })
     }, function(err){
@@ -70,20 +64,16 @@ function downloadImg(receipts, callback){
     })
 }
 
-function getBinaryImage(receipt, options, callback){
-    let req = https.request(options, function(res){
-        let image = null;
-        res.on('data', function(d){
-            image += d;
-        });
-        res.on('end', function(){
-            callback(null, image);
-        });
-    });
-    req.on('error', function(e){
-        callback(e, null);
-    });
-    req.end();
+function getBinaryImage(receipt, callback) {
+    rp(receipt.imgUrl)
+        .then(res => {
+            console.log(res);
+            // let data = new Buffer(res, 'base64')
+            callback(null, res)
+        })
+        .catch(err => {
+            callback(err, null)
+        })
 }
 
 module.exports = routes;

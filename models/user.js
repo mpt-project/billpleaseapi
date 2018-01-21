@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 
 //schema for user model
 const userSchema = new Schema({
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    name: {type: String, required: true, unique: false},
+    email: {type: Schema.Types.String, required: true, unique: true},
+    password: {type: Schema.Types.String, required: true, unique: false},
+    name: {type: Schema.Types.String, required: true, unique: false},
     receipts: {type: Array}
     }, { collection: 'user' });
 
@@ -33,7 +33,7 @@ userSchema.statics.authenticate = function (email, password, callback) {
                 if (result === true) {
                     return callback(null, user);
                 } else {
-                    return callback();
+                    return callback('wrong password!', null);
                 }
             })
         });
