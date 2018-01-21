@@ -5,7 +5,7 @@ let isLoggedIn = function isLoggedIn(req, res, next) {
         return obj.userId == req.body.id;
     });
     if(checkLogin.length === 0){
-        res.status(400).json({"message": "authorization problem"});
+        res.status(400).json({"message": "Authorization problem"});
     }else{
         next();
     }

@@ -31,7 +31,6 @@ class ImgurProvider {
 				})
 		})
 	}
-
 	authorise (refreshToken) {
 		return new Promise ((resolve, reject) => {
 			this.query.uri = this.config.endpoints.authorization
@@ -59,13 +58,31 @@ class ImgurProvider {
 		return base.replace(/^data:image\/[a-z]+;base64,/, "")
 	}
 
-	get tokenParams () {
-		return {
-			refresh_token: '',
+	getTokenParams (refresh_token, callback) {
+		const params = {
+			refresh_token: refresh_token,
 			client_id: this.config.clientId,
 			client_secret: this.config.clientSecret,
-			grant_type: 'refresh_token',
-		}
+			grant_type: 'refresh_token'
+		};
+		this.getNewToken(params).then(function(newToken){
+			callback(null, newToken);
+		})
+	}
+
+	getNewToken (params) {
+        return new Promise ((resolve, reject) => {
+            this.query.uri = this.config.endpoints.authorization;
+            this.query.body = params;
+
+            rp(this.query)
+                .then(res => {
+                    return resolve(res)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+        })
 	}
 }
 

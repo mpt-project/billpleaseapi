@@ -19,13 +19,13 @@ routes.post('/', function(req, res) {
                     });
                     if(sessionCheck.length === 0){
                         req.session.userId.push({userId: user._id});
-                        res.status(200).json({"message": "Login succesfully user", "id": user._id});
+                        res.status(200).json({"message": "Login successfully user", "id": user._id});
                     }else{
-                        res.status(200).json({"message": "session exists ", "id": user._id});
+                        res.status(200).json({"message": "Session exists ", "id": user._id});
                     }
                 } else {
                     req.session.userId = [{userId: user._id}];
-                    res.status(200).json({"message": "Login succesfully user ", "id": user._id});
+                    res.status(200).json({"message": "Login successfully user ", "id": user._id});
                 }
             }
         })
