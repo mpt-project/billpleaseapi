@@ -15,7 +15,7 @@ routes.post('/', function(req, res){
             findAllReceipts(user, function(err, receipts){
                 if(err) res.status(401).json({"message": "Error occure why downloading receipts"});
                 else{
-                           res.status(200).json(receipts);
+                    res.status(200).json(receipts);
                 }
             })
         }

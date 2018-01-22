@@ -17,11 +17,12 @@ routes.post('/', (req, res) => {
 		if(today < expire){
             img.uploadImage(access_token, image)
             	.then(data => {
-            		if (data && data.link) {
-            			res.status(201).json({ url: data.link })
+            		if (data) {
+            			res.status(201).json({ url: data })
             		}
             	})
             	.catch(err => {
+            		console.log(err);
             		res.status(500).json({ error: 'Internal Error' })
             	})
 		}else {
