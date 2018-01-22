@@ -1,5 +1,7 @@
-const imgurConfig = require('../config/imgur.json')
-const rp = require('request-promise')
+const imgurConfig = require('../config/imgur.json');
+const rp = require('request-promise');
+var imgur = require('imgur');
+
 
 class ImgurProvider {
 
@@ -17,19 +19,29 @@ class ImgurProvider {
 
 	uploadImage (accessToken, image) {
 		return new Promise ((resolve, reject) => {
-			this.query.uri = this.config.endpoints.upload
-			this.query.body = { image: this.prepareString(image) }
+			//this.query.uri = this.config.endpoints.upload
+			//this.query.body = { image: this.prepareString(image) }
 
-			this.setHeader('Authorization', `Bearer ${accessToken}`)
-
-			rp(this.query)
-				.then(res => {
-					return resolve(res.data)
-				})
-				.catch(err => {
-					return reject(err)
-				})
-		})
+			// this.setHeader('Authorization', `Bearer ${accessToken}`)
+            //
+			// rp(this.query)
+			// 	.then(res => {
+			// 		return resolve(res.data)
+			// 	})
+			// 	.catch(err => {
+			// 		return reject(err)
+			// 	})
+            imgur.setAPIUrl('https://api.imgur.com/3/');
+            imgur.uploadBase64(image)
+                .then(function (json) {
+                    console.log(json.data.link);
+                    return resolve(json.data.link);
+                })
+                .catch(function (err) {
+                    console.error(err.message);
+                    return reject(err);
+                });
+        })
 	}
 	authorise (refreshToken) {
 		return new Promise ((resolve, reject) => {
